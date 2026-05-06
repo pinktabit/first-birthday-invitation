@@ -10,8 +10,9 @@ const INVITATION = {
   dateText: "2026년 6월 20일 토요일",
   timeText: "오후 12시",
 
-  // 여기 수정: D-day 계산용 날짜입니다. 형식은 YYYY-MM-DD로 적어 주세요.
+  // 여기 수정: D-day와 카운트다운 계산용 날짜입니다.
   ddayDate: "2026-06-20",
+  ddayDateTime: "2026-06-20T12:00:00",
 
   // 여기 수정: 장소 정보
   venueName: "○○호텔 연회장",
@@ -51,6 +52,30 @@ const INVITATION = {
     "images/gallery-4.svg",
     "images/gallery-5.svg",
     "images/gallery-6.svg"
+  ],
+
+  // 여기 수정: 성장 이야기 내용을 바꿀 수 있습니다.
+  timeline: [
+    {
+      date: "2025.06.20",
+      title: "처음 만난 날",
+      text: "작고 소중한 우리 아기가 가족에게 찾아온 날"
+    },
+    {
+      date: "2025.09.28",
+      title: "첫 웃음",
+      text: "환하게 웃어주던 순간, 집 안이 사랑으로 가득 찼습니다."
+    },
+    {
+      date: "2026.01.05",
+      title: "100일의 축복",
+      text: "하루하루 건강히 자라준 고마운 시간"
+    },
+    {
+      date: "2026.06.20",
+      title: "1ST BIRTHDAY",
+      text: "사랑과 축복 속에서 맞이하는 첫 생일"
+    }
   ]
 };
 
@@ -86,7 +111,6 @@ async function copyText(text, successMessage) {
     await navigator.clipboard.writeText(text);
     showToast(successMessage);
   } catch (error) {
-    // 일부 오래된 모바일 브라우저를 위한 예비 복사 방식입니다.
     const textarea = document.createElement("textarea");
     textarea.value = text;
     textarea.setAttribute("readonly", "");
@@ -100,14 +124,16 @@ async function copyText(text, successMessage) {
   }
 }
 
-function updateDday() {
-  const ddayElement = $("#dday");
+function getDayDifference() {
   const today = new Date();
   const target = new Date(`${INVITATION.ddayDate}T00:00:00`);
   today.setHours(0, 0, 0, 0);
+  return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+}
 
-  const diff = target.getTime() - today.getTime();
-  const day = Math.ceil(diff / (1000 * 60 * 60 * 24));
+function updateDday() {
+  const ddayElement = $("#dday");
+  const day = getDayDifference();
 
   if (day > 0) {
     ddayElement.textContent = `D-${day}`;
@@ -116,6 +142,43 @@ function updateDday() {
   } else {
     ddayElement.textContent = `D+${Math.abs(day)}`;
   }
+}
+
+function updateCountdown() {
+  const target = new Date(INVITATION.ddayDateTime).getTime();
+  const now = Date.now();
+  const diff = Math.max(target - now, 0);
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  setText("#countDays", String(days));
+  setText("#countHours", String(hours).padStart(2, "0"));
+  setText("#countMinutes", String(minutes).padStart(2, "0"));
+  setText("#countSeconds", String(seconds).padStart(2, "0"));
+
+  const day = getDayDifference();
+  const message = day >= 0
+    ? `${INVITATION.babyName}의 생일파티가 ${day}일 남았습니다.`
+    : `${INVITATION.babyName}의 첫 생일을 함께 축하해 주셔서 감사합니다.`;
+  setText("#countdownMessage", message);
+}
+
+function renderTimeline() {
+  const timeline = $("#timeline");
+  timeline.innerHTML = "";
+
+  INVITATION.timeline.forEach((item) => {
+    const article = document.createElement("article");
+    article.innerHTML = `
+      <time>${item.date}</time>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+    `;
+    timeline.appendChild(article);
+  });
 }
 
 function renderGallery() {
@@ -141,12 +204,16 @@ function fillInvitation() {
   $("#mainPhoto").src = INVITATION.mainPhoto;
   $("#mainPhoto").alt = `${INVITATION.babyName} 메인 사진`;
 
-  setText("#babyName", INVITATION.babyName);
-  setText("#partyDateText", INVITATION.dateText);
+  setText("#coverBabyName", INVITATION.babyName);
+  setText("#familyBabyName", INVITATION.babyName);
+  setText("#partyDateText", `${INVITATION.dateText} ${INVITATION.timeText}`);
+  setText("#coverVenue", INVITATION.venueName);
   setText("#greetingMessage", INVITATION.greeting);
-  setText("#dateInfo", INVITATION.dateText);
+  setText("#dateInfo", `${INVITATION.dateText} ${INVITATION.timeText}`);
+  setText("#scheduleDate", INVITATION.dateText);
   setText("#timeInfo", INVITATION.timeText);
   setText("#venueInfo", INVITATION.venueName);
+  setText("#scheduleVenue", INVITATION.venueName);
   setText("#addressInfo", INVITATION.address);
   setText("#momAccount", INVITATION.momAccount);
   setText("#dadAccount", INVITATION.dadAccount);
@@ -155,13 +222,15 @@ function fillInvitation() {
   setLink("#kakaoMapLink", INVITATION.mapLinks.kakao);
   setLink("#tmapLink", INVITATION.mapLinks.tmap);
   setLink("#rsvpLink", INVITATION.googleFormLink);
-
   setLink("#momCallLink", `tel:${onlyNumber(INVITATION.momPhone)}`);
   setLink("#dadCallLink", `tel:${onlyNumber(INVITATION.dadPhone)}`);
   setLink("#smsLink", `sms:${onlyNumber(INVITATION.momPhone)}`);
 
+  renderTimeline();
   renderGallery();
   updateDday();
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
 }
 
 function bindButtons() {

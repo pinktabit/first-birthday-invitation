@@ -21,51 +21,109 @@
 </head>
 <body>
   <main class="invite-shell">
-    <section class="hero reveal" aria-label="첫 화면">
-      <div class="hero-photo-wrap">
+    <section class="cover reveal" aria-label="첫 화면">
+      <p class="cover-small">First Birthday</p>
+      <h1><span id="coverBabyName">엘리야</span>의<br>첫번째 생일</h1>
+
+      <div class="cover-photo">
         <!-- 여기 수정: images/main-photo.jpg 같은 실제 아기 사진으로 바꿔도 됩니다. -->
-        <img id="mainPhoto" class="hero-photo" src="images/main-photo.svg" alt="아기 메인 사진">
+        <img id="mainPhoto" src="images/main-photo.svg" alt="아기 메인 사진">
       </div>
 
-      <p class="eyebrow">First Birthday Invitation</p>
-      <h1>우리 아기의 첫 번째 생일에 초대합니다</h1>
-      <p id="babyName" class="baby-name">엘리야</p>
-      <p id="partyDateText" class="date-text">2026년 6월 20일 토요일</p>
+      <p id="partyDateText" class="cover-date">2026년 6월 20일 토요일 오후 12시</p>
+      <p id="coverVenue" class="cover-place">○○호텔 연회장</p>
       <p id="dday" class="dday" aria-live="polite">D-day 계산 중</p>
     </section>
 
-    <section class="card greeting reveal" aria-labelledby="greetingTitle">
-      <p class="section-kicker">Invitation</p>
-      <h2 id="greetingTitle">소중한 분들께</h2>
+    <section class="story-section greeting reveal" aria-labelledby="greetingTitle">
+      <p class="section-kicker">INVITATION</p>
+      <h2 id="greetingTitle">초대합니다.</h2>
       <p id="greetingMessage" class="message"></p>
+      <p class="parents-line">아빠 김○○ · 엄마 김○○</p>
     </section>
 
-    <section class="card reveal" aria-labelledby="scheduleTitle">
-      <p class="section-kicker">Schedule</p>
-      <h2 id="scheduleTitle">일정 안내</h2>
+    <section class="story-section contact-panel reveal" aria-labelledby="contactTitle">
+      <p class="section-kicker">CONTACT</p>
+      <h2 id="contactTitle">연락하기</h2>
+      <div class="profile-list">
+        <article>
+          <span>엄마</span>
+          <strong>김○○</strong>
+          <a id="momCallLink" href="tel:01000000000">전화하기</a>
+        </article>
+        <article>
+          <span>아빠</span>
+          <strong>김○○</strong>
+          <a id="dadCallLink" href="tel:01011111111">전화하기</a>
+        </article>
+      </div>
+      <a id="smsLink" class="button button-soft" href="sms:01000000000">문자 보내기</a>
+    </section>
+
+    <section class="story-section reveal" aria-labelledby="timelineTitle">
+      <p class="section-kicker">A YEAR OF STORY</p>
+      <h2 id="timelineTitle">1년간의 성장 이야기</h2>
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <section class="story-section date-panel reveal" aria-labelledby="dateTitle">
+      <p class="section-kicker">BIRTHDAY DATE</p>
+      <h2 id="dateTitle">생일 파티 날짜</h2>
+      <p id="dateInfo" class="date-main"></p>
+      <div class="countdown" aria-label="생일까지 남은 시간">
+        <div><strong id="countDays">0</strong><span>Days</span></div>
+        <div><strong id="countHours">0</strong><span>Hours</span></div>
+        <div><strong id="countMinutes">0</strong><span>Minutes</span></div>
+        <div><strong id="countSeconds">0</strong><span>Seconds</span></div>
+      </div>
+      <p id="countdownMessage" class="count-message"></p>
+    </section>
+
+    <section class="story-section reveal" aria-labelledby="familyTitle">
+      <p class="section-kicker">INTRODUCTION</p>
+      <h2 id="familyTitle">우리 가족을 소개합니다.</h2>
+      <div class="family-grid">
+        <article><span>아빠</span><strong>김○○</strong><em>#든든한품</em></article>
+        <article><span>엄마</span><strong>김○○</strong><em>#사랑가득</em></article>
+        <article><span>아기</span><strong id="familyBabyName">엘리야</strong><em>#보물1호</em></article>
+      </div>
+    </section>
+
+    <section class="story-section reveal" aria-labelledby="babyTitle">
+      <p class="section-kicker">ABOUT BABY</p>
+      <h2 id="babyTitle">주인공에 대해 알아봐요</h2>
+      <div class="qa-list">
+        <details open>
+          <summary>Q. 요즘 가장 잘하는 것은?</summary>
+          <p>손뼉 치며 웃어주기, 이름을 부르면 환하게 바라봐 주기예요.</p>
+        </details>
+        <details>
+          <summary>Q. 가장 좋아하는 시간은?</summary>
+          <p>엄마 아빠 품에 안겨 노래를 듣는 시간을 가장 좋아해요.</p>
+        </details>
+        <details>
+          <summary>Q. 어떤 아이로 자라길 바라나요?</summary>
+          <p>사랑을 듬뿍 받고, 또 사랑을 나눌 줄 아는 따뜻한 아이로 자라길 바랍니다.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="story-section reveal" aria-labelledby="galleryTitle">
+      <p class="section-kicker">GALLERY</p>
+      <h2 id="galleryTitle">사랑 가득한 모든 순간</h2>
+      <div id="gallery" class="gallery" aria-label="아기 사진 갤러리"></div>
+    </section>
+
+    <section class="story-section reveal" aria-labelledby="locationTitle">
+      <p class="section-kicker">LOCATION</p>
+      <h2 id="locationTitle">오시는 길</h2>
+      <p id="addressInfo" class="address-text"></p>
+      <p id="venueInfo" class="venue-text"></p>
       <dl class="info-list">
-        <div>
-          <dt>날짜</dt>
-          <dd id="dateInfo"></dd>
-        </div>
-        <div>
-          <dt>시간</dt>
-          <dd id="timeInfo"></dd>
-        </div>
-        <div>
-          <dt>장소</dt>
-          <dd id="venueInfo"></dd>
-        </div>
-        <div>
-          <dt>주소</dt>
-          <dd id="addressInfo"></dd>
-        </div>
+        <div><dt>날짜</dt><dd id="scheduleDate"></dd></div>
+        <div><dt>시간</dt><dd id="timeInfo"></dd></div>
+        <div><dt>장소</dt><dd id="scheduleVenue"></dd></div>
       </dl>
-    </section>
-
-    <section class="card reveal" aria-labelledby="mapTitle">
-      <p class="section-kicker">Map</p>
-      <h2 id="mapTitle">지도 안내</h2>
       <div class="button-grid">
         <a id="naverMapLink" class="button button-soft" href="#" target="_blank" rel="noopener">네이버지도</a>
         <a id="kakaoMapLink" class="button button-soft" href="#" target="_blank" rel="noopener">카카오맵</a>
@@ -73,32 +131,19 @@
       </div>
     </section>
 
-    <section class="card reveal" aria-labelledby="contactTitle">
-      <p class="section-kicker">Contact</p>
-      <h2 id="contactTitle">연락하기</h2>
-      <div class="button-grid">
-        <a id="momCallLink" class="button" href="tel:01000000000">엄마 전화하기</a>
-        <a id="dadCallLink" class="button" href="tel:01011111111">아빠 전화하기</a>
-        <a id="smsLink" class="button button-soft" href="sms:01000000000">문자 보내기</a>
+    <section class="story-section notice-section reveal" aria-labelledby="noticeTitle">
+      <p class="section-kicker">INFORMATION</p>
+      <h2 id="noticeTitle">안내사항</h2>
+      <div class="notice-list">
+        <article><strong>답례품</strong><p>참석해 주신 분들께 감사의 마음을 담아 작은 답례품을 준비했습니다.</p></article>
+        <article><strong>주차 안내</strong><p>행사장 주차장을 이용하실 수 있습니다. 자세한 내용은 장소 확정 후 수정해 주세요.</p></article>
       </div>
     </section>
 
-    <section class="card reveal" aria-labelledby="rsvpTitle">
-      <p class="section-kicker">RSVP</p>
-      <h2 id="rsvpTitle">참석 여부</h2>
-      <p class="sub-text">참석 가능 여부를 알려주시면 정성껏 준비하겠습니다.</p>
-      <a id="rsvpLink" class="button button-wide" href="#" target="_blank" rel="noopener">참석 여부 전달하기</a>
-    </section>
-
-    <section class="card reveal" aria-labelledby="galleryTitle">
-      <p class="section-kicker">Gallery</p>
-      <h2 id="galleryTitle">엘리야의 순간들</h2>
-      <div id="gallery" class="gallery" aria-label="아기 사진 갤러리"></div>
-    </section>
-
-    <section class="card reveal" aria-labelledby="accountTitle">
-      <p class="section-kicker">Gift</p>
+    <section class="story-section reveal" aria-labelledby="accountTitle">
+      <p class="section-kicker">THANKS TO</p>
       <h2 id="accountTitle">마음 전하실 곳</h2>
+      <p class="sub-text">직접 축하를 전하지 못하는 분들을 위해 계좌번호를 기재했습니다. 넓은 마음으로 양해 부탁드립니다.</p>
       <div class="account-list">
         <details>
           <summary>엄마 계좌 보기</summary>
@@ -113,11 +158,16 @@
       </div>
     </section>
 
-    <section class="card share-card reveal" aria-labelledby="shareTitle">
-      <p class="section-kicker">Share</p>
-      <h2 id="shareTitle">공유하기</h2>
-      <p class="sub-text">카카오톡 공유는 별도 API 없이 초대장 링크를 복사해 전달해 주세요.</p>
-      <button id="copyPageLink" class="button button-wide" type="button">현재 페이지 링크 복사</button>
+    <section class="rsvp-band reveal" aria-labelledby="rsvpTitle">
+      <p class="section-kicker">R/S/V/P</p>
+      <h2 id="rsvpTitle">참석 여부</h2>
+      <p>특별한 날 축하하는 마음으로 함께해 주시는 모든 분들을 귀하게 모실 수 있도록 참석 여부를 알려주세요.</p>
+      <a id="rsvpLink" class="button button-wide" href="#" target="_blank" rel="noopener">참석 여부 전달하기</a>
+    </section>
+
+    <section class="share-section reveal" aria-labelledby="shareTitle">
+      <h2 id="shareTitle">첫돌을 함께해 주셔서<br>진심으로 감사드립니다.</h2>
+      <button id="copyPageLink" class="button button-soft" type="button">링크 복사하기</button>
     </section>
 
     <footer class="footer">
