@@ -198,6 +198,19 @@ function renderGallery() {
   });
 }
 
+function renderCoverGallery() {
+  const coverGallery = $("#coverGallery");
+  coverGallery.innerHTML = "";
+
+  INVITATION.galleryImages.slice(0, 3).forEach((src, index) => {
+    const image = document.createElement("img");
+    image.src = src;
+    image.alt = `${INVITATION.babyName} 작은 사진 ${index + 1}`;
+    image.loading = "lazy";
+    coverGallery.appendChild(image);
+  });
+}
+
 function fillInvitation() {
   document.title = `${INVITATION.babyName}의 첫 번째 생일에 초대합니다`;
 
@@ -227,6 +240,7 @@ function fillInvitation() {
   setLink("#smsLink", `sms:${onlyNumber(INVITATION.momPhone)}`);
 
   renderTimeline();
+  renderCoverGallery();
   renderGallery();
   updateDday();
   updateCountdown();
