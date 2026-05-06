@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-label="갤러리 사진 자리 5">
+  <rect width="900" height="900" fill="#fffdf8"/>
+  <circle cx="450" cy="330" r="132" fill="#e1c394"/>
+  <path d="M225 700c66-150 384-150 450 0 20 45-22 86-225 86s-245-41-225-86Z" fill="#af8d55"/>
+  <text x="450" y="815" text-anchor="middle" font-size="42" font-family="serif" fill="#92733f">Gallery 5</text>
+</svg>

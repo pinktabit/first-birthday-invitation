@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 여기 수정: 카카오톡/문자 공유 시 보이는 제목과 설명입니다. -->
+  <title>엘리야의 첫 번째 생일에 초대합니다</title>
+  <meta name="description" content="엘리야의 첫 번째 생일에 소중한 분들을 초대합니다.">
+
+  <!-- 여기 수정: GitHub Pages 주소가 생기면 content에 실제 초대장 주소를 넣어도 좋습니다. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="엘리야의 첫 번째 생일에 초대합니다">
+  <meta property="og:description" content="따뜻한 자리에 함께해 주세요.">
+  <meta property="og:image" content="images/main-photo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="invite-shell">
+    <section class="hero reveal" aria-label="첫 화면">
+      <div class="hero-photo-wrap">
+        <!-- 여기 수정: images/main-photo.jpg 같은 실제 아기 사진으로 바꿔도 됩니다. -->
+        <img id="mainPhoto" class="hero-photo" src="images/main-photo.svg" alt="아기 메인 사진">
+      </div>
+
+      <p class="eyebrow">First Birthday Invitation</p>
+      <h1>우리 아기의 첫 번째 생일에 초대합니다</h1>
+      <p id="babyName" class="baby-name">엘리야</p>
+      <p id="partyDateText" class="date-text">2026년 6월 20일 토요일</p>
+      <p id="dday" class="dday" aria-live="polite">D-day 계산 중</p>
+    </section>
+
+    <section class="card greeting reveal" aria-labelledby="greetingTitle">
+      <p class="section-kicker">Invitation</p>
+      <h2 id="greetingTitle">소중한 분들께</h2>
+      <p id="greetingMessage" class="message"></p>
+    </section>
+
+    <section class="card reveal" aria-labelledby="scheduleTitle">
+      <p class="section-kicker">Schedule</p>
+      <h2 id="scheduleTitle">일정 안내</h2>
+      <dl class="info-list">
+        <div>
+          <dt>날짜</dt>
+          <dd id="dateInfo"></dd>
+        </div>
+        <div>
+          <dt>시간</dt>
+          <dd id="timeInfo"></dd>
+        </div>
+        <div>
+          <dt>장소</dt>
+          <dd id="venueInfo"></dd>
+        </div>
+        <div>
+          <dt>주소</dt>
+          <dd id="addressInfo"></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="card reveal" aria-labelledby="mapTitle">
+      <p class="section-kicker">Map</p>
+      <h2 id="mapTitle">지도 안내</h2>
+      <div class="button-grid">
+        <a id="naverMapLink" class="button button-soft" href="#" target="_blank" rel="noopener">네이버지도</a>
+        <a id="kakaoMapLink" class="button button-soft" href="#" target="_blank" rel="noopener">카카오맵</a>
+        <a id="tmapLink" class="button button-soft" href="#" target="_blank" rel="noopener">T맵</a>
+      </div>
+    </section>
+
+    <section class="card reveal" aria-labelledby="contactTitle">
+      <p class="section-kicker">Contact</p>
+      <h2 id="contactTitle">연락하기</h2>
+      <div class="button-grid">
+        <a id="momCallLink" class="button" href="tel:01000000000">엄마 전화하기</a>
+        <a id="dadCallLink" class="button" href="tel:01011111111">아빠 전화하기</a>
+        <a id="smsLink" class="button button-soft" href="sms:01000000000">문자 보내기</a>
+      </div>
+    </section>
+
+    <section class="card reveal" aria-labelledby="rsvpTitle">
+      <p class="section-kicker">RSVP</p>
+      <h2 id="rsvpTitle">참석 여부</h2>
+      <p class="sub-text">참석 가능 여부를 알려주시면 정성껏 준비하겠습니다.</p>
+      <a id="rsvpLink" class="button button-wide" href="#" target="_blank" rel="noopener">참석 여부 전달하기</a>
+    </section>
+
+    <section class="card reveal" aria-labelledby="galleryTitle">
+      <p class="section-kicker">Gallery</p>
+      <h2 id="galleryTitle">엘리야의 순간들</h2>
+      <div id="gallery" class="gallery" aria-label="아기 사진 갤러리"></div>
+    </section>
+
+    <section class="card reveal" aria-labelledby="accountTitle">
+      <p class="section-kicker">Gift</p>
+      <h2 id="accountTitle">마음 전하실 곳</h2>
+      <div class="account-list">
+        <details>
+          <summary>엄마 계좌 보기</summary>
+          <p id="momAccount"></p>
+          <button id="copyMomAccount" class="button button-soft" type="button">계좌 복사하기</button>
+        </details>
+        <details>
+          <summary>아빠 계좌 보기</summary>
+          <p id="dadAccount"></p>
+          <button id="copyDadAccount" class="button button-soft" type="button">계좌 복사하기</button>
+        </details>
+      </div>
+    </section>
+
+    <section class="card share-card reveal" aria-labelledby="shareTitle">
+      <p class="section-kicker">Share</p>
+      <h2 id="shareTitle">공유하기</h2>
+      <p class="sub-text">카카오톡 공유는 별도 API 없이 초대장 링크를 복사해 전달해 주세요.</p>
+      <button id="copyPageLink" class="button button-wide" type="button">현재 페이지 링크 복사</button>
+    </section>
+
+    <footer class="footer">
+      <p>소중한 발걸음을 기다립니다.</p>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

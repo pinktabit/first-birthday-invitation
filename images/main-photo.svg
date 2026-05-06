@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-label="메인 사진 자리">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf2"/>
+      <stop offset="52%" stop-color="#f0ddc3"/>
+      <stop offset="100%" stop-color="#d9bd87"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <circle cx="600" cy="560" r="185" fill="#fffdf8" opacity=".78"/>
+  <path d="M330 1040c95-185 445-185 540 0 25 48 8 106-44 128-142 60-310 60-452 0-52-22-69-80-44-128Z" fill="#fffdf8" opacity=".76"/>
+  <text x="600" y="1245" text-anchor="middle" font-size="52" font-family="serif" fill="#92733f">Main Photo</text>
+  <text x="600" y="1322" text-anchor="middle" font-size="34" font-family="sans-serif" fill="#7d6d5f">images 폴더에 실제 사진을 넣어 교체하세요</text>
+</svg>
