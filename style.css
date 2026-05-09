@@ -1,5 +1,12 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&family=Quicksand:wght@400;600;700&display=swap');
 
+    @font-face {
+      font-family: 'HakgyoansimWoojuR';
+      src: url('font/HakgyoansimWoojuR.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
     :root {
       --bg: #fff0f5;
       --paper: #fff9fb;
@@ -136,7 +143,7 @@
 
     .hero h1 {
       margin-top: 32px;
-      font-family: 'Nanum Myeongjo', serif;
+      font-family: 'HakgyoansimWoojuR', 'Nanum Myeongjo', serif;
       font-size: 38px;
       line-height: 1.38;
       color: #452932;
