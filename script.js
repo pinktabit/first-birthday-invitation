@@ -92,11 +92,26 @@ function collectRsvpPayload() {
     return null;
   }
 
+  if (!guestsSelect || !guestsSelect.value) {
+    showToast("본인 외 인원을 선택해 주세요.");
+    guestsSelect?.focus();
+    return null;
+  }
+
+  if (
+    guestsSelect.value === "본인 외 4명 이상" &&
+    (!messageInput || !messageInput.value.trim())
+  ) {
+    showToast("외 3명 초과 인원은 전달사항에 적어 주세요.");
+    messageInput?.focus();
+    return null;
+  }
+
   return {
     attendance: selectedAttendance.textContent.trim(),
     name: nameInput.value.trim(),
     phone: phoneInput?.value.trim() || "",
-    guests: guestsSelect?.value || "본인 외 0명",
+    guests: guestsSelect.value,
     message: messageInput?.value.trim() || "",
     submittedAt: new Date().toISOString(),
   };
