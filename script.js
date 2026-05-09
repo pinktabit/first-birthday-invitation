@@ -149,6 +149,7 @@ async function submitRsvp(payload) {
     },
     body: JSON.stringify(payload),
   });
+
   return true;
 }
 
@@ -187,6 +188,85 @@ function bindRsvpForm() {
     } finally {
       rsvpSubmit.classList.remove("is-loading");
       rsvpSubmit.removeAttribute("aria-disabled");
+    }
+  });
+}
+
+function openPhotoViewer(src, alt) {
+  const viewer = document.querySelector("#photoViewer");
+  const image = document.querySelector("#photoViewerImage");
+  const caption = document.querySelector("#photoViewerCaption");
+
+  if (!viewer || !image) return;
+
+  image.src = src;
+  image.alt = alt || "확대 사진";
+  if (caption) {
+    caption.textContent = alt || "";
+  }
+
+  viewer.hidden = false;
+  document.body.classList.add("viewer-open");
+}
+
+function closePhotoViewer() {
+  const viewer = document.querySelector("#photoViewer");
+  const image = document.querySelector("#photoViewerImage");
+  const caption = document.querySelector("#photoViewerCaption");
+
+  if (!viewer || viewer.hidden) return;
+
+  viewer.hidden = true;
+  document.body.classList.remove("viewer-open");
+
+  if (image) {
+    image.src = "";
+    image.alt = "";
+  }
+
+  if (caption) {
+    caption.textContent = "";
+  }
+}
+
+function bindPhotoViewer() {
+  const photoSelectors = [
+    ".main-photo img",
+    ".story-photo img",
+    ".family-photo img",
+    ".gallery-item img",
+    ".map-image",
+  ];
+
+  document.querySelectorAll(photoSelectors.join(",")).forEach((image) => {
+    image.setAttribute("tabindex", "0");
+    image.classList.add("zoomable-photo");
+
+    const open = () => openPhotoViewer(image.currentSrc || image.src, image.alt);
+
+    image.addEventListener("click", open);
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
+    });
+  });
+
+  const viewer = document.querySelector("#photoViewer");
+  const closeButton = document.querySelector("#photoViewerClose");
+
+  if (!viewer) return;
+
+  viewer.addEventListener("click", (event) => {
+    if (event.target === viewer || event.target === closeButton) {
+      closePhotoViewer();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closePhotoViewer();
     }
   });
 }
@@ -230,4 +310,5 @@ updateCountdown();
 window.setInterval(updateCountdown, 1000);
 bindAccountCopy();
 bindRsvpForm();
+bindPhotoViewer();
 bindMapLinks();
