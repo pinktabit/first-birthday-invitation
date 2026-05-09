@@ -273,6 +273,12 @@
       object-position: center center;
     }
 
+    .gallery-photo-6 {
+      transform: scale(1);
+      transform-origin: center center;
+      object-position: center center;
+    }
+
     .hero-bottom {
       position: relative;
       z-index: 1;
