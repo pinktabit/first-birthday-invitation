@@ -665,6 +665,13 @@
       display: block;
     }
 
+    .map-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .button-grid {
       display: grid;
       gap: 10px;
