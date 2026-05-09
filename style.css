@@ -144,10 +144,10 @@
     .hero h1 {
       margin-top: 32px;
       font-family: 'HakgyoansimWoojuR', 'Nanum Myeongjo', serif;
-      font-size: 38px;
+      font-size: 44px;
       line-height: 1.38;
       color: #452932;
-      letter-spacing: -0.05em;
+      letter-spacing: 0.04em;
     }
 
     .hero-name {
@@ -865,7 +865,7 @@
 
     @media (max-width: 390px) {
       .hero { min-height: 745px; }
-      .hero h1 { font-size: 34px; }
+      .hero h1 { font-size: 39px; }
       .main-photo { height: 390px; }
       .section { padding: 66px 22px; }
       .story-photo { height: 155px; }
