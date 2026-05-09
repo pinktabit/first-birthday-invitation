@@ -1,5 +1,5 @@
 // 여기 수정: 실제 행사 날짜/시간으로 바꾸면 카운트다운이 자동으로 계산됩니다.
-const PARTY_DATE_TIME = "2026-06-20T12:00:00";
+const PARTY_DATE_TIME = "2026-06-13T16:30:00";
 
 // 여기 수정: Google Form 주소가 생기면 # 대신 넣어 주세요.
 const GOOGLE_FORM_URL = "#";
