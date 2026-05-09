@@ -191,66 +191,79 @@
     .main-photo-image {
       transform: scale(1.13);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .story-photo-1 {
-      transform: scale(1);
+      transform: scale(1.5);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .story-photo-2 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .story-photo-3 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .story-photo-4 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .family-photo-dad {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .family-photo-mom {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .family-photo-baby {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .gallery-photo-1 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .gallery-photo-2 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .gallery-photo-3 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .gallery-photo-4 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .gallery-photo-5 {
       transform: scale(1);
       transform-origin: center center;
+      object-position: center center;
     }
 
     .hero-bottom {
