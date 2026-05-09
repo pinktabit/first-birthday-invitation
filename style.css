@@ -188,6 +188,11 @@
       display: block;
     }
 
+    .main-photo img {
+      transform: scale(1.16);
+      transform-origin: center center;
+    }
+
     .hero-bottom {
       position: relative;
       z-index: 1;
