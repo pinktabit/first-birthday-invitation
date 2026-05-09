@@ -934,14 +934,6 @@
       box-shadow: 0 22px 46px rgba(0, 0, 0, 0.24);
     }
 
-    .photo-viewer-caption {
-      color: #fff7fa;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.55;
-      word-break: keep-all;
-    }
-
     .photo-viewer-close {
       position: absolute;
       top: 18px;

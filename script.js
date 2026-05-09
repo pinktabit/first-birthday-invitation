@@ -195,15 +195,11 @@ function bindRsvpForm() {
 function openPhotoViewer(src, alt) {
   const viewer = document.querySelector("#photoViewer");
   const image = document.querySelector("#photoViewerImage");
-  const caption = document.querySelector("#photoViewerCaption");
 
   if (!viewer || !image) return;
 
   image.src = src;
   image.alt = alt || "확대 사진";
-  if (caption) {
-    caption.textContent = alt || "";
-  }
 
   viewer.hidden = false;
   document.body.classList.add("viewer-open");
@@ -212,7 +208,6 @@ function openPhotoViewer(src, alt) {
 function closePhotoViewer() {
   const viewer = document.querySelector("#photoViewer");
   const image = document.querySelector("#photoViewerImage");
-  const caption = document.querySelector("#photoViewerCaption");
 
   if (!viewer || viewer.hidden) return;
 
@@ -222,10 +217,6 @@ function closePhotoViewer() {
   if (image) {
     image.src = "";
     image.alt = "";
-  }
-
-  if (caption) {
-    caption.textContent = "";
   }
 }
 
