@@ -196,14 +196,14 @@
 
     .story-photo-1 {
       transform: scale(1.5);
-      transform-origin: center 30%;
-      object-position: 75% 60%;
+      transform-origin: 65% 30%;
+      object-position: center center;
     }
 
     .story-photo-2 {
       transform: scale(1.9);
-      transform-origin: center 90%;
-      object-position: 45% center;
+      transform-origin: 45% 90%;
+      object-position: center center;
     }
 
     .story-photo-3 {
