@@ -1,17 +1,20 @@
 const PARTY_DATE_TIME = "2026-06-13T16:30:00";
 
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeN5nlH4j-wXPRz5jLv5FExyD4AE3xMDQOfYONWcTxj1Pw0kg/viewform";
-const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeN5nlH4j-wXPRz5jLv5FExyD4AE3xMDQOfYONWcTxj1Pw0kg/formResponse";
-const GOOGLE_FORM_FIELDS = {
-  attendance: "entry.355234693",
-  name: "entry.1749070286",
-  phone: "entry.1550788275",
-  guests: "entry.1934757202",
-  message: "entry.564547742",
+const DEFAULT_CONFIG = {
+  appsScriptUrl: "",
 };
+
+function getConfig() {
+  return {
+    ...DEFAULT_CONFIG,
+    ...(window.INVITATION_CONFIG || {}),
+  };
+}
 
 function showToast(message) {
   const toast = document.querySelector("#toast");
+  if (!toast) return;
+
   toast.textContent = message;
   toast.classList.add("show");
 
@@ -23,7 +26,9 @@ function showToast(message) {
 
 function setText(selector, value) {
   const element = document.querySelector(selector);
-  if (element) element.textContent = value;
+  if (element) {
+    element.textContent = value;
+  }
 }
 
 function updateCountdown() {
@@ -69,12 +74,74 @@ function bindAccountCopy() {
   });
 }
 
+function collectRsvpPayload() {
+  const selectedAttendance = document.querySelector(".radio-box.is-selected");
+  const nameInput = document.querySelector("#rsvpName");
+  const phoneInput = document.querySelector("#rsvpPhone");
+  const guestsSelect = document.querySelector("#rsvpGuests");
+  const messageInput = document.querySelector("#rsvpMessage");
+
+  if (!selectedAttendance) {
+    showToast("참석 여부를 선택해 주세요.");
+    return null;
+  }
+
+  if (!nameInput || !nameInput.value.trim()) {
+    showToast("성함을 입력해 주세요.");
+    nameInput?.focus();
+    return null;
+  }
+
+  return {
+    attendance: selectedAttendance.textContent.trim(),
+    name: nameInput.value.trim(),
+    phone: phoneInput?.value.trim() || "",
+    guests: guestsSelect?.value || "본인 외 0명",
+    message: messageInput?.value.trim() || "",
+    submittedAt: new Date().toISOString(),
+  };
+}
+
+function resetRsvpForm() {
+  document.querySelectorAll(".radio-box").forEach((item) => {
+    item.classList.remove("is-selected");
+  });
+
+  const nameInput = document.querySelector("#rsvpName");
+  const phoneInput = document.querySelector("#rsvpPhone");
+  const guestsSelect = document.querySelector("#rsvpGuests");
+  const messageInput = document.querySelector("#rsvpMessage");
+
+  if (nameInput) nameInput.value = "";
+  if (phoneInput) phoneInput.value = "";
+  if (guestsSelect) guestsSelect.selectedIndex = 0;
+  if (messageInput) messageInput.value = "";
+}
+
+async function submitRsvp(payload) {
+  const { appsScriptUrl } = getConfig();
+
+  if (!appsScriptUrl) {
+    showToast("RSVP 연결 주소를 먼저 설정해 주세요.");
+    return false;
+  }
+
+  await fetch(appsScriptUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+    },
+    body: JSON.stringify(payload),
+  });
+  return true;
+}
+
 function bindRsvpForm() {
   document.querySelectorAll(".radio-box").forEach((box) => {
     box.addEventListener("click", () => {
-      box.parentElement.querySelectorAll(".radio-box").forEach((item) => {
-        item.classList.remove("is-selected");
-      });
+      const siblings = box.parentElement?.querySelectorAll(".radio-box") || [];
+      siblings.forEach((item) => item.classList.remove("is-selected"));
       box.classList.add("is-selected");
     });
   });
@@ -82,72 +149,30 @@ function bindRsvpForm() {
   const rsvpSubmit = document.querySelector("#rsvpSubmit");
   if (!rsvpSubmit) return;
 
-  rsvpSubmit.addEventListener("click", (event) => {
+  rsvpSubmit.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    const selectedAttendance = document.querySelector(".radio-box.is-selected");
-    const nameInput = document.querySelector("#rsvpName");
-    const phoneInput = document.querySelector("#rsvpPhone");
-    const guestsSelect = document.querySelector("#rsvpGuests");
-    const messageInput = document.querySelector("#rsvpMessage");
+    const payload = collectRsvpPayload();
+    if (!payload) return;
 
-    if (!selectedAttendance) {
-      showToast("참석 여부를 선택해 주세요.");
-      return;
+    rsvpSubmit.classList.add("is-loading");
+    rsvpSubmit.setAttribute("aria-disabled", "true");
+
+    try {
+      const saved = await submitRsvp(payload);
+      if (!saved) {
+        throw new Error("Save failed");
+      }
+
+      resetRsvpForm();
+      showToast("참석 여부가 전달되었습니다.");
+    } catch (error) {
+      console.error(error);
+      showToast("전달 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      rsvpSubmit.classList.remove("is-loading");
+      rsvpSubmit.removeAttribute("aria-disabled");
     }
-
-    if (!nameInput || !nameInput.value.trim()) {
-      showToast("성함을 입력해 주세요.");
-      nameInput?.focus();
-      return;
-    }
-
-    let hiddenFrame = document.querySelector("#hiddenGoogleFormFrame");
-    if (!hiddenFrame) {
-      hiddenFrame = document.createElement("iframe");
-      hiddenFrame.id = "hiddenGoogleFormFrame";
-      hiddenFrame.name = "hiddenGoogleFormFrame";
-      hiddenFrame.style.display = "none";
-      document.body.appendChild(hiddenFrame);
-    }
-
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = GOOGLE_FORM_ACTION_URL;
-    form.target = "hiddenGoogleFormFrame";
-    form.style.display = "none";
-
-    const payload = {
-      [GOOGLE_FORM_FIELDS.attendance]: selectedAttendance.textContent.trim(),
-      [GOOGLE_FORM_FIELDS.name]: nameInput.value.trim(),
-      [GOOGLE_FORM_FIELDS.phone]: phoneInput?.value.trim() || "",
-      [GOOGLE_FORM_FIELDS.guests]: guestsSelect?.value || "본인 외 0명",
-      [GOOGLE_FORM_FIELDS.message]: messageInput?.value.trim() || "",
-    };
-
-    Object.entries(payload).forEach(([name, value]) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = name;
-      input.value = value;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
-
-    showToast("참석 여부가 전달되었습니다.");
-
-    window.setTimeout(() => {
-      document.querySelectorAll(".radio-box").forEach((item) => {
-        item.classList.remove("is-selected");
-      });
-      nameInput.value = "";
-      if (phoneInput) phoneInput.value = "";
-      if (guestsSelect) guestsSelect.selectedIndex = 0;
-      if (messageInput) messageInput.value = "";
-    }, 200);
   });
 }
 
@@ -168,9 +193,9 @@ function bindMapLinks() {
         return;
       }
 
-      const now = Date.now();
+      const startedAt = Date.now();
       const fallbackTimer = window.setTimeout(() => {
-        if (Date.now() - now < 1800) {
+        if (Date.now() - startedAt < 1800) {
           window.location.href = webFallback;
         }
       }, 1200);
