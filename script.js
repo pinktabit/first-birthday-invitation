@@ -89,6 +89,41 @@ function bindRsvpForm() {
   }
 }
 
+function bindMapLinks() {
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  document.querySelectorAll(".map-link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const appLink = link.dataset.appLink;
+      const webFallback = link.dataset.webFallback || link.href;
+
+      if (!appLink) return;
+
+      event.preventDefault();
+
+      if (!isMobile) {
+        window.open(webFallback, "_blank", "noopener");
+        return;
+      }
+
+      const now = Date.now();
+      const fallbackTimer = window.setTimeout(() => {
+        if (Date.now() - now < 1800) {
+          window.location.href = webFallback;
+        }
+      }, 1200);
+
+      window.addEventListener(
+        "pagehide",
+        () => window.clearTimeout(fallbackTimer),
+        { once: true }
+      );
+
+      window.location.href = appLink;
+    });
+  });
+}
+
 function bindGuestBookMock() {
   const guestSubmit = document.querySelector("#guestSubmit");
   if (!guestSubmit) return;
@@ -103,4 +138,5 @@ updateCountdown();
 window.setInterval(updateCountdown, 1000);
 bindAccountCopy();
 bindRsvpForm();
+bindMapLinks();
 bindGuestBookMock();
